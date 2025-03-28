@@ -1,0 +1,1229 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Press Start 2P', cursive;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(#5B97E5, #89CEFF);
+    overflow: hidden;
+    touch-action: manipulation;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: linear-gradient(to bottom, #92CC41 0%, #4AA52E 100%);
+    z-index: -1;
+}
+
+/* 添加远景山丘 */
+body::after {
+    content: "";
+    position: absolute;
+    bottom: 25%;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    background: linear-gradient(to bottom, #5B97E5 0%, #5B97E5 50%, #C86F2D 50%, #C86F2D 100%);
+    z-index: -2;
+    clip-path: polygon(
+        0% 100%,
+        10% 40%,
+        20% 80%,
+        30% 40%,
+        40% 60%,
+        50% 30%,
+        60% 70%,
+        70% 40%,
+        80% 60%,
+        90% 30%,
+        100% 100%
+    );
+}
+
+/* 添加浮动云朵 */
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    background: white;
+    border-radius: 40px;
+    animation: float 20s linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+}
+
+.cloud::before {
+    width: 50px;
+    height: 50px;
+    top: -20px;
+    left: 15px;
+}
+
+.cloud::after {
+    width: 60px;
+    height: 60px;
+    top: -25px;
+    right: 15px;
+}
+
+.cloud:nth-child(1) {
+    top: 15%;
+    left: -100px;
+    transform: scale(1.2);
+    animation-delay: 0s;
+}
+
+.cloud:nth-child(2) {
+    top: 25%;
+    left: -100px;
+    transform: scale(0.8);
+    animation-delay: -5s;
+}
+
+.cloud:nth-child(3) {
+    top: 10%;
+    left: -100px;
+    transform: scale(1);
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    from {
+        transform: translateX(-100px);
+    }
+    to {
+        transform: translateX(calc(100vw + 100px));
+    }
+}
+
+/* 移动端云朵优化 */
+@media (max-width: 768px) {
+    .cloud {
+        animation-duration: 15s;
+    }
+    
+    .cloud:nth-child(1) {
+        transform: scale(0.8);
+    }
+    
+    .cloud:nth-child(2) {
+        transform: scale(0.6);
+    }
+    
+    .cloud:nth-child(3) {
+        transform: scale(0.7);
+    }
+}
+
+@media (max-width: 480px) {
+    .cloud {
+        animation-duration: 12s;
+    }
+}
+
+/* 基础样式调整为响应式 */
+.calculator {
+    width: 90%;
+    max-width: 350px;
+    background-color: #E52521;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 0 #8B0000, 0 20px 25px rgba(0, 0, 0, 0.4);
+    border: 4px solid #000;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 60px;
+    margin: 20px auto;
+    transform: translateZ(0); /* 启用硬件加速 */
+}
+
+/* 修正马里奥基础定位容器高度 */
+.calculator {
+    position: relative; /* 确保绝对定位基准 */
+    padding-bottom: 60px; /* 新增底部内边距防止被截断 */
+}
+
+/* 修复马里奥定位上下文 */
+.display {
+    position: relative; /* 确保.mario-face定位基准正确 */
+    min-height: 120px; /* 新增最小高度保证显示空间 */
+}
+
+/* 修正马里奥定位计算 */
+.mario-face {
+    top: 45%; /* 调整垂直定位基准 */
+    transform: translate(-50%, -70%); /* 调整垂直偏移 */
+}
+
+/* 修复动画位置偏移问题 */
+.show-mario .mario-face {
+    animation: mario-jump 0.5s ease-in-out; 
+    transform: translate(-50%, -50%); /* 重置基础位置 */
+}
+
+/* 新增关键帧动画定义（之前缺失） */
+@keyframes mario-jump {
+    0% { transform: translate(-50%, -50%) translateY(0); }
+    30% { transform: translate(-50%, -50%) translateY(-15px); }
+    60% { transform: translate(-50%, -50%) translateY(5px); }
+    100% { transform: translate(-50%, -50%) translateY(0); }
+}
+
+/* 响应式设计优化 */
+@media (max-width: 768px) {
+    .calculator {
+        width: 95%;
+        padding: 15px;
+        margin: 10px auto;
+    }
+    
+    .keypad {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+    }
+    
+    button {
+        height: 55px;
+        font-size: 16px;
+        border-width: 2px;
+    }
+
+    .display {
+        padding: 12px;
+        margin-bottom: 12px;
+        min-height: 100px;
+    }
+
+    .current-operand {
+        font-size: 1.8em;
+    }
+
+    .previous-operand {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 500px) {
+    .calculator {
+        width: 98%;
+        padding: 10px;
+        margin: 5px auto;
+    }
+    
+    .keypad {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 6px;
+    }
+    
+    button {
+        height: 45px;
+        font-size: 14px;
+        border-width: 2px;
+    }
+
+    .display {
+        padding: 10px;
+        margin-bottom: 10px;
+        min-height: 90px;
+    }
+
+    .current-operand {
+        font-size: 1.5em;
+    }
+
+    .previous-operand {
+        font-size: 0.8em;
+    }
+
+    /* 优化云朵装饰在移动端的显示 */
+    body::after {
+        top: 10%;
+        left: 5%;
+        width: 60px;
+        height: 30px;
+        box-shadow: 
+            80px -10px 0 20px white,
+            160px 20px 0 15px white,
+            240px -5px 0 25px white,
+            -60px 30px 0 15px white;
+    }
+
+    /* 优化管道装饰在移动端的显示 */
+    .calculator::after {
+        width: 30px;
+        height: 20px;
+        right: 20px;
+    }
+}
+
+/* 添加横屏支持 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .calculator {
+        width: 90%;
+        max-width: 600px;
+        padding: 10px;
+    }
+    
+    .keypad {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+    }
+    
+    button {
+        height: 35px;
+        font-size: 12px;
+    }
+
+    .display {
+        padding: 8px;
+        margin-bottom: 8px;
+        min-height: 70px;
+    }
+
+    .current-operand {
+        font-size: 1.3em;
+    }
+
+    .previous-operand {
+        font-size: 0.7em;
+    }
+
+    /* 优化横屏时的装饰元素 */
+    body::after {
+        display: none;
+    }
+}
+
+/* 添加触摸设备优化 */
+@media (hover: none) {
+    button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    button:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 #B29700;
+    }
+}
+
+/* 显示区域响应式 */
+.display {
+    background-color: #9DC08B;
+    border: 3px solid #000;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: right;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.current-operand {
+    font-size: 2em;
+    line-height: 1.2;
+    word-wrap: break-word;
+    transition: transform 0.1s ease;
+}
+
+.previous-operand {
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.7);
+    min-height: 1.2em;
+}
+
+/* 优化数字显示溢出处理 */
+.current-operand, .previous-operand {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.current-operand::-webkit-scrollbar,
+.previous-operand::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.current-operand {
+    font-size: calc(1.5em + 1vw); /* 动态字体大小 */
+}
+
+/* 马里オ帽子装饰 */
+.calculator::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 100px;
+    height: 30px;
+    background: #E52521;
+    border-radius: 10px;
+    transform: rotate(-45deg);
+    z-index: 1;
+}
+
+/* 修改马里奥基础尺寸及响应式适配 - 更符合经典形象 */
+.mario-face {
+    width: 70px; /* 增加基础宽度 */
+    height: 100px; /* 增加基础高度 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: none;
+}
+
+/* 添加马里奥的面部元素样式 - 更符合经典形象 */
+.mario-face .head {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38px;
+    height: 38px;
+    background-color: #FFCCA8; /* 更准确的肤色 */
+    border-radius: 50% 50% 45% 45%;
+    border: 2px solid #000;
+    z-index: 2;
+}
+
+.mario-face .eyes {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 10px;
+    z-index: 3;
+}
+
+.mario-face .eyes::before,
+.mario-face .eyes::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #FFFFFF; /* 白色眼球 */
+    border-radius: 50%;
+    border: 1px solid #000;
+}
+
+.mario-face .eyes::before {
+    left: 3px;
+}
+
+.mario-face .eyes::after {
+    right: 3px;
+}
+
+/* 添加眼球中的蓝色瞳孔 */
+.mario-face .eyes::before::after,
+.mario-face .eyes::after::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #3498db; /* 蓝色瞳孔 */
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+}
+
+.mario-face .nose {
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: #E5846A; /* 更准确的鼻子颜色 */
+    border-radius: 50%;
+    border: 1px solid #000;
+    z-index: 3;
+}
+
+.mario-face .mustache {
+    position: absolute;
+    top: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38px;
+    height: 12px;
+    z-index: 3;
+}
+
+.mario-face .mustache::before,
+.mario-face .mustache::after {
+    content: "";
+    position: absolute;
+    width: 19px;
+    height: 8px;
+    background-color: #4A2604; /* 深棕色胡子 */
+    border-radius: 45%;
+    border: 1px solid #000;
+}
+
+.mario-face .mustache::before {
+    left: 0;
+    transform: rotate(15deg);
+}
+
+.mario-face .mustache::after {
+    right: 0;
+    transform: rotate(-15deg);
+}
+
+.mario-face .body {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 25px;
+    background-color: #E52521; /* 红色衣服 */
+    border: 2px solid #000;
+    border-radius: 10px 10px 0 0;
+    z-index: 1;
+}
+
+.mario-face .overalls {
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 25px;
+    background-color: #1658D3; /* 更准确的蓝色背带裤 */
+    border: 2px solid #000;
+    border-radius: 0 0 10px 10px;
+    z-index: 1;
+}
+
+/* 添加背带 */
+.mario-face .overalls::before,
+.mario-face .overalls::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 20px;
+    background-color: #1658D3; /* 蓝色背带 */
+    border: 1px solid #000;
+    top: -15px;
+    z-index: 2;
+}
+
+.mario-face .overalls::before {
+    left: 8px;
+    transform: rotate(-5deg);
+}
+
+.mario-face .overalls::after {
+    right: 8px;
+    transform: rotate(5deg);
+}
+
+/* 添加黄色按钮 */
+.mario-face .overalls::before::after,
+.mario-face .overalls::after::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: #FBD000; /* 黄色按钮 */
+    border-radius: 50%;
+    border: 1px solid #000;
+    top: 5px;
+    left: 0;
+}
+
+.mario-face .m-logo {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: #FFFFFF; /* 白色圆形背景 */
+    border-radius: 50%;
+    border: 1px solid #000;
+    z-index: 2;
+}
+
+.mario-face .m-logo::before {
+    content: "M";
+    position: absolute;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    font-weight: bold;
+    color: #E52521; /* 红色M标志 */
+    left: 4px;
+    top: 3px;
+}
+
+/* 添加帽子边缘 */
+.mario-face::after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 5px;
+    background-color: #E52521; /* 红色帽檐 */
+    border: 2px solid #000;
+    border-radius: 3px;
+    z-index: 3;
+}
+
+/* 修复帽子位置和比例 - 更符合经典形象 */
+.mario-face::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px; /* 帽子宽度 */
+    height: 25px; /* 帽子高度 */
+    background-color: #E52521; /* 红色帽子 */
+    border: 2px solid #000;
+    border-radius: 15px 15px 0 0;
+    z-index: 4;
+}
+
+/* 修复头部位置和尺寸 */
+.mario-face .head {
+    top: 20px; /* 头部位置 */
+    width: 36px; /* 头部宽度 */
+    height: 36px; /* 头部高度 */
+    border-radius: 50%;
+}
+
+/* 调整鼻子位置 */
+.mario-face .nose {
+    top: 36px; /* 鼻子位置 */
+    width: 10px;
+    height: 10px;
+}
+
+/* 优化胡子样式 */
+.mario-face .mustache {
+    top: 40px; /* 胡子位置 */
+    width: 36px;
+}
+
+.mario-face .mustache::before,
+.mario-face .mustache::after {
+    width: 18px; /* 子元素宽度 */
+    height: 6px;
+}
+
+/* 响应式适配优化 */
+@media (max-width: 768px) {
+    .mario-face {
+        width: 50px;
+        height: 75px;
+    }
+    .mario-face::before {
+        width: 35px;
+        height: 18px;
+    }
+    .mario-face .head {
+        width: 30px;
+        height: 30px;
+        top: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mario-face {
+        width: 40px;
+        height: 60px;
+    }
+    .mario-face::before {
+        width: 30px;
+        height: 15px;
+    }
+    .mario-face .head {
+        width: 25px;
+        height: 25px;
+        top: 14px;
+    }
+}
+
+/* 显示马里オ头像时的样式 */
+.show-mario .current-operand {
+    opacity: 0; /* 计算结果隐藏时显示头像 */
+}
+
+.show-mario .mario-face {
+    display: block;
+    animation: mario-jump 0.5s ease-in-out; /* 动画关键帧已定义 */
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    transform: translateZ(0); /* 启用硬件加速 */
+}
+
+button {
+    height: 60px;
+    border: 3px solid #000;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    background-color: #FBD000;
+    color: #000;
+    box-shadow: 0 5px 0 #B29700;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    transform: translateZ(0); /* 启用硬件加速 */
+}
+
+button:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #B29700;
+}
+
+/* 优化按钮触摸区域 */
+button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+}
+
+/* 添加触摸设备的特殊样式 */
+@media (hover: none) {
+    button {
+        transition: all 0.1s ease;
+    }
+
+    button:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0 #B29700;
+        background-color: #FFE13C;
+    }
+}
+
+/* 优化按钮在不同屏幕尺寸下的大小 */
+@media (max-width: 360px) {
+    button {
+        height: 50px;
+        font-size: 16px;
+        border-width: 2px;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-height: 450px) and (orientation: landscape) {
+    button {
+        height: 40px;
+        font-size: 14px;
+        border-width: 2px;
+    }
+    
+    .keypad {
+        grid-gap: 6px;
+    }
+}
+
+button:hover {
+    background-color: #FFE13C;
+}
+
+button.clear {
+    background-color: #4AA5F0;
+    box-shadow: 0 5px 0 #1A75BC;
+}
+
+button.clear:hover {
+    background-color: #71B8F5;
+}
+
+button.clear:active {
+    box-shadow: 0 0 0 #1A75BC;
+}
+
+button[data-action="delete"] {
+    background-color: #FF6B6B;
+    box-shadow: 0 5px 0 #C74A4A;
+}
+
+button[data-action="delete"]:hover {
+    background-color: #FF8A8A;
+}
+
+button[data-action="delete"]:active {
+    box-shadow: 0 0 0 #C74A4A;
+}
+
+button[data-action="operator"] {
+    background-color: #43B047;
+    box-shadow: 0 5px 0 #2D7A30;
+}
+
+button[data-action="operator"]:hover {
+    background-color: #5DC661;
+}
+
+button[data-action="operator"]:active {
+    box-shadow: 0 0 0 #2D7A30;
+}
+
+button.equals {
+    background-color: #FF9B21;
+    box-shadow: 0 5px 0 #D67B10;
+}
+
+button.equals:hover {
+    background-color: #FFAE4E;
+}
+
+button.equals:active {
+    box-shadow: 0 0 0 #D67B10;
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+/* 添加马里奥风格装饰元素 */
+/* 砖块装饰 */
+.brick-decoration {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 40px;
+    height: 40px;
+    background: #D87F33;
+    border: 3px solid #000;
+    z-index: -1;
+}
+
+.brick-decoration::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 4px;
+    background: #8B4513;
+}
+
+.brick-decoration::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    width: 80%;
+    height: 4px;
+    background: #8B4513;
+}
+
+/* 管道装饰 */
+.calculator::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    right: 30px;
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(to bottom, #43B047 0%, #2E8A3A 100%);
+    border: 3px solid #000;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    box-shadow: inset -5px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 添加管道顶部高光 */
+.calculator::before {
+    content: "";
+    position: absolute;
+    bottom: -7px;
+    right: 33px;
+    width: 34px;
+    height: 5px;
+    background: #4AC556;
+    border-radius: 3px 3px 0 0;
+    z-index: 1;
+}
+
+/* 马里奥蘑菇装饰 */
+.mushroom {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: -1;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transform-origin: bottom center;
+}
+
+/* 蘑菇头部 */
+.mushroom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%;
+    border-radius: 20px 20px 2px 2px;
+    border: 3px solid #000;
+    box-sizing: border-box;
+    background-size: 8px 8px;
+}
+
+/* 蘑菇底部 */
+.mushroom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65%;
+    height: 45%;
+    background: #FFF;
+    border: 3px solid #000;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: inset 0 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 超级蘑菇 */
+.mushroom.super::before {
+    background: #E52521;
+    background-image: 
+        radial-gradient(circle at 30% 30%, #FFF 0, #FFF 20%, transparent 20%),
+        radial-gradient(circle at 70% 30%, #FFF 0, #FFF 20%, transparent 20%),
+        linear-gradient(90deg, transparent 47%, rgba(0,0,0,0.1) 47%, rgba(0,0,0,0.1) 53%, transparent 53%);
+}
+
+/* 1UP蘑菇 */
+.mushroom.oneup::before {
+    background: #43B047;
+    background-image: 
+        radial-gradient(circle at 30% 30%, #FFF 0, #FFF 20%, transparent 20%),
+        radial-gradient(circle at 70% 30%, #FFF 0, #FFF 20%, transparent 20%),
+        linear-gradient(90deg, transparent 47%, rgba(0,0,0,0.1) 47%, rgba(0,0,0,0.1) 53%, transparent 53%);
+}
+
+/* 蘑菇眼睛 */
+.mushroom.super::before,
+.mushroom.oneup::before {
+    box-shadow: inset 0 4px 5px rgba(255, 255, 255, 0.3);
+}
+
+/* 蘑菇阴影 */
+.mushroom::after {
+    background: linear-gradient(to bottom, #FFF 60%, #F0F0F0 100%);
+}
+
+/* 蘑菇动画 */
+@keyframes mushroomFloat {
+    0% { 
+        transform: translateY(0) rotate(0deg) scale(1); 
+    }
+    25% {
+        transform: translateY(-8px) rotate(-2deg) scale(1.02);
+    }
+    50% { 
+        transform: translateY(-15px) rotate(0deg) scale(1.05);
+    }
+    75% {
+        transform: translateY(-8px) rotate(2deg) scale(1.02);
+    }
+    100% { 
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+@keyframes mushroomBob {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(0.95);
+    }
+}
+
+.mushroom {
+    animation: mushroomFloat 4s ease-in-out infinite;
+}
+
+.mushroom::after {
+    animation: mushroomBob 2s ease-in-out infinite;
+}
+
+/* 错开动画时间 */
+.mushroom:nth-child(1) {
+    animation-delay: -0.5s;
+}
+
+.mushroom:nth-child(2) {
+    animation-delay: -1.5s;
+}
+
+.mushroom:nth-child(3) {
+    animation-delay: -2.5s;
+}
+
+.mushroom:nth-child(4) {
+    animation-delay: -3.5s;
+}
+
+/* 添加悬停效果 */
+@media (hover: hover) {
+    .mushroom:hover {
+        animation-play-state: paused;
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+}
+
+/* 优化移动端动画 */
+@media (max-width: 768px) {
+    .mushroom {
+        animation-duration: 3s;
+    }
+    
+    @keyframes mushroomFloat {
+        0% { 
+            transform: translateY(0) rotate(0deg) scale(1); 
+        }
+        50% { 
+            transform: translateY(-10px) rotate(0deg) scale(1.02);
+        }
+        100% { 
+            transform: translateY(0) rotate(0deg) scale(1);
+        }
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .mushroom {
+        width: 30px;
+        height: 30px;
+    }
+    .brick-decoration {
+        width: 30px;
+        height: 30px;
+        top: 5%;
+        right: 8%;
+    }
+
+    .calculator::after {
+        width: 30px;
+        height: 25px;
+        right: 20px;
+    }
+
+    .calculator::before {
+        width: 24px;
+        right: 23px;
+        height: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brick-decoration {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+/* 添加响应式适配 */
+@media (max-width: 768px) {
+    .mario-face {
+        width: 65px;
+        height: 95px;
+    }
+
+    .mario-face::before {
+        width: 40px;
+        height: 22px;
+        top: -3px;
+    }
+
+    .mario-face::after {
+        width: 40px;
+        height: 4px;
+        top: 14px;
+    }
+
+    .mario-face .head {
+        width: 35px;
+        height: 35px;
+        top: 16px;
+    }
+
+    .mario-face .eyes {
+        top: 24px;
+        width: 30px;
+    }
+
+    .mario-face .nose {
+        top: 33px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .mario-face .mustache {
+        top: 40px;
+        width: 35px;
+    }
+
+    .mario-face .body {
+        top: 48px;
+        width: 40px;
+    }
+
+    .mario-face .overalls {
+        top: 62px;
+        width: 40px;
+    }
+
+    .mario-face .m-logo {
+        top: 52px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .mario-face .m-logo::before {
+        font-size: 10px;
+        left: 4px;
+        top: 3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mario-face {
+        width: 55px;
+        height: 85px;
+    }
+
+    .mario-face::before {
+        width: 35px;
+        height: 18px;
+        top: -2px;
+    }
+
+    .mario-face::after {
+        width: 35px;
+        height: 4px;
+        top: 12px;
+    }
+
+    .mario-face .head {
+        width: 30px;
+        height: 30px;
+        top: 14px;
+    }
+
+    .mario-face .eyes {
+        top: 22px;
+        width: 26px;
+    }
+
+    .mario-face .eyes::before,
+    .mario-face .eyes::after {
+        width: 8px;
+        height: 8px;
+    }
+
+    .mario-face .nose {
+        top: 30px;
+        width: 9px;
+        height: 9px;
+    }
+
+    .mario-face .mustache {
+        top: 36px;
+        width: 30px;
+        height: 10px;
+    }
+
+    .mario-face .mustache::before,
+    .mario-face .mustache::after {
+        height: 7px;
+        width: 15px;
+    }
+
+    .mario-face .body {
+        top: 44px;
+        width: 35px;
+        height: 22px;
+    }
+
+    .mario-face .overalls {
+        top: 58px;
+        width: 35px;
+        height: 22px;
+    }
+
+    .mario-face .m-logo {
+        top: 48px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .mario-face .m-logo::before {
+        font-size: 9px;
+        left: 3px;
+        top: 3px;
+    }
+}

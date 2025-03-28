@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>马里奥计算器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="clouds">
+      <div class="cloud"></div>
+      <div class="cloud"></div>
+      <div class="cloud"></div>
+    </div>
+    <!-- 添加蘑菇装饰 -->
+    <div class="mushroom super" style="left: 10%; bottom: 25%"></div>
+    <div class="mushroom oneup" style="right: 15%; bottom: 30%"></div>
+    <div
+      class="mushroom super"
+      style="left: 25%; bottom: 28%; transform: scale(0.8)"
+    ></div>
+    <div
+      class="mushroom oneup"
+      style="right: 30%; bottom: 27%; transform: scale(0.7)"
+    ></div>
+    <div class="brick-decoration"></div>
+    <div
+      class="brick-decoration"
+      style="top: 15%; right: 15%; transform: scale(0.8)"
+    ></div>
+    <div
+      class="brick-decoration"
+      style="top: 25%; right: 25%; transform: scale(0.9)"
+    ></div>
+    <div class="calculator">
+      <div class="display" style="position: relative">
+        <div class="previous-operand"></div>
+        <div class="current-operand">0</div>
+        <div class="mario-face">
+          <div class="head"></div>
+          <div class="eyes"></div>
+          <div class="nose"></div>
+          <div class="mustache"></div>
+          <div class="body"></div>
+          <div class="overalls"></div>
+          <div class="m-logo"></div>
+        </div>
+      </div>
+      <div class="keypad">
+        <button class="clear" data-action="clear">AC</button>
+        <button data-action="delete">DEL</button>
+        <button data-action="operator">%</button>
+        <button data-action="operator">÷</button>
+
+        <button data-value="7">7</button>
+        <button data-value="8">8</button>
+        <button data-value="9">9</button>
+        <button data-action="operator">×</button>
+
+        <button data-value="4">4</button>
+        <button data-value="5">5</button>
+        <button data-value="6">6</button>
+        <button data-action="operator">-</button>
+
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="3">3</button>
+        <button data-action="operator">+</button>
+
+        <button data-value="0" class="span-2">0</button>
+        <button data-value=".">.</button>
+        <button data-action="calculate" class="equals">=</button>
+      </div>
+    </div>
+    <!-- 预加载音效 -->
+    <audio id="coin" src="sounds/smb_coin.wav"></audio>
+    <audio id="jump" src="sounds/smb_jump-small.wav"></audio>
+    <audio id="pipe" src="sounds/smb_pipe.wav"></audio>
+    <script src="script.js"></script>
+  </body>
+</html>
